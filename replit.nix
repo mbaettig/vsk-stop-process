@@ -1,15 +1,15 @@
 { pkgs }:
 
 let
-  # Newer nixpkgs only for Java 25
-  pkgsNew = import (builtins.fetchTarball "https://github.com/NixOS/nixpkgs/archive/nixpkgs-unstable.tar.gz") {};
+  # Pinned nixpkgs (for JDK 25) – same result on every import
+  pkgsNew = import (builtins.fetchTarball
+    "https://github.com/NixOS/nixpkgs/archive/c7def046b9a883d46974757852106483d741586f.tar.gz") {};
 in
 {
   deps = [
     pkgsNew.jdk25
     pkgsNew.maven
-    # Keep these from Replit’s overlay (only works on stable-22_11, etc.)
-    pkgs.replitPackages.jdt-language-server
-    pkgs.replitPackages.java-debug
+    pkgsNew.jdt-language-server
   ];
 }
+
